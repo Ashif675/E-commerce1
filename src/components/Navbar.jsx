@@ -32,16 +32,16 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 glass border-b border-slate-200/60 shadow-sm">
+    <nav className="sticky top-0 z-50 glass shadow-lg shadow-black/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 font-bold text-xl">
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-3 py-1 rounded-lg text-sm">
+            <span className="bg-gradient-to-r from-emerald-500 to-green-400 text-gray-950 px-3 py-1 rounded-lg text-sm font-black">
               SHOP
             </span>
-            <span className="text-slate-800">Store</span>
+            <span className="text-white">Store</span>
           </Link>
 
           {/* Desktop Nav Links */}
@@ -50,7 +50,7 @@ export default function Navbar() {
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-slate-600 hover:text-indigo-600 transition-colors font-medium"
+                className="text-gray-400 hover:text-emerald-400 transition-colors font-medium"
               >
                 {link.label}
               </Link>
@@ -59,14 +59,14 @@ export default function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <Link to="/wishlist" className="relative p-2 text-slate-600 hover:text-indigo-600 transition-colors">
+            <Link to="/wishlist" className="relative p-2 text-gray-400 hover:text-emerald-400 transition-colors">
               <FiHeart size={20} />
             </Link>
 
-            <Link to="/cart" className="relative p-2 text-slate-600 hover:text-indigo-600 transition-colors">
+            <Link to="/cart" className="relative p-2 text-gray-400 hover:text-emerald-400 transition-colors">
               <FiShoppingCart size={20} />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-1 -right-1 bg-emerald-500 text-gray-950 text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold animate-pulse-soft">
                   {cartCount}
                 </span>
               )}
@@ -76,27 +76,27 @@ export default function Navbar() {
               <div className="relative">
                 <button
                   onClick={() => setUserMenu(!userMenu)}
-                  className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 rounded-full px-3 py-2 transition-colors"
+                  className="flex items-center gap-2 bg-gray-800/80 hover:bg-gray-700/80 rounded-full px-3 py-2 transition-colors border border-gray-700/60"
                 >
-                  <FiUser size={16} />
-                  <span className="text-sm font-medium max-w-[100px] truncate">
+                  <FiUser size={16} className="text-emerald-400" />
+                  <span className="text-sm font-medium max-w-[100px] truncate text-gray-300">
                     {user.displayName || 'User'}
                   </span>
                 </button>
 
                 {userMenu && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-100 py-2 animate-fade-in-up">
+                  <div className="absolute right-0 mt-2 w-48 bg-gray-900 rounded-xl shadow-xl border border-gray-700/60 py-2 animate-fade-in-up">
                     <Link
                       to="/dashboard"
                       onClick={() => setUserMenu(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-gray-800 hover:text-emerald-400"
                     >
                       <FiUser size={14} /> My Dashboard
                     </Link>
                     <Link
                       to="/orders"
                       onClick={() => setUserMenu(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-gray-800 hover:text-emerald-400"
                     >
                       <FiPackage size={14} /> My Orders
                     </Link>
@@ -104,15 +104,15 @@ export default function Navbar() {
                       <Link
                         to="/admin"
                         onClick={() => setUserMenu(false)}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-indigo-600 hover:bg-indigo-50"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-emerald-400 hover:bg-emerald-950"
                       >
                         <FiGrid size={14} /> Admin Panel
                       </Link>
                     )}
-                    <hr className="my-1 border-slate-100" />
+                    <hr className="my-1 border-gray-700/60" />
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-400 hover:bg-red-950/40"
                     >
                       <FiLogOut size={14} /> Logout
                     </button>
@@ -122,7 +122,7 @@ export default function Navbar() {
             ) : (
               <Link
                 to="/login"
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg text-sm font-semibold transition-colors"
+                className="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded-lg text-sm font-semibold transition-colors shadow-lg shadow-emerald-600/20"
               >
                 Login
               </Link>
@@ -131,15 +131,15 @@ export default function Navbar() {
 
           {/* Mobile Hamburger */}
           <div className="md:hidden flex items-center gap-3">
-            <Link to="/cart" className="relative p-2 text-slate-600">
+            <Link to="/cart" className="relative p-2 text-gray-400">
               <FiShoppingCart size={20} />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-1 -right-1 bg-emerald-500 text-gray-950 text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
                   {cartCount}
                 </span>
               )}
             </Link>
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-slate-600">
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-gray-400">
               {mobileOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
           </div>
@@ -148,14 +148,14 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-white border-t border-slate-100 animate-fade-in-up">
+        <div className="md:hidden bg-gray-900 border-t border-gray-800 animate-fade-in-up">
           <div className="px-4 py-4 space-y-2">
             {navLinks.map(link => (
               <Link
                 key={link.to}
                 to={link.to}
                 onClick={() => setMobileOpen(false)}
-                className="block px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-50 font-medium"
+                className="block px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-emerald-400 font-medium"
               >
                 {link.label}
               </Link>
@@ -163,19 +163,19 @@ export default function Navbar() {
             <Link
               to="/wishlist"
               onClick={() => setMobileOpen(false)}
-              className="block px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-50 font-medium"
+              className="block px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-emerald-400 font-medium"
             >
               Wishlist
             </Link>
             {user ? (
               <>
-                <Link to="/dashboard" onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-50 font-medium">Dashboard</Link>
-                <Link to="/orders" onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-50 font-medium">Orders</Link>
-                {isAdmin && <Link to="/admin" onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg text-indigo-600 hover:bg-indigo-50 font-medium">Admin Panel</Link>}
-                <button onClick={() => { handleLogout(); setMobileOpen(false); }} className="w-full text-left px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 font-medium">Logout</button>
+                <Link to="/dashboard" onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-800 font-medium">Dashboard</Link>
+                <Link to="/orders" onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-800 font-medium">Orders</Link>
+                {isAdmin && <Link to="/admin" onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg text-emerald-400 hover:bg-emerald-950 font-medium">Admin Panel</Link>}
+                <button onClick={() => { handleLogout(); setMobileOpen(false); }} className="w-full text-left px-4 py-3 rounded-lg text-red-400 hover:bg-red-950/40 font-medium">Logout</button>
               </>
             ) : (
-              <Link to="/login" onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg bg-indigo-600 text-white text-center font-semibold">Login</Link>
+              <Link to="/login" onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg bg-emerald-600 text-white text-center font-semibold">Login</Link>
             )}
           </div>
         </div>

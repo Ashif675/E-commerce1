@@ -34,8 +34,8 @@ export default function Products() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800 mb-2">All Products</h1>
-        <p className="text-slate-500">Showing {filtered.length} products</p>
+        <h1 className="text-3xl font-bold text-white mb-2">All Products</h1>
+        <p className="text-gray-500">Showing {filtered.length} products</p>
       </div>
 
       {/* Filters Row */}
@@ -52,8 +52,8 @@ export default function Products() {
               onClick={() => setCategory(cat)}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                 category === cat
-                  ? 'bg-indigo-600 text-white shadow-md'
-                  : 'bg-white text-slate-600 border border-slate-200 hover:border-indigo-300'
+                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/25'
+                  : 'bg-gray-800 text-gray-400 border border-gray-700 hover:border-emerald-500/40 hover:text-emerald-400'
               }`}
             >
               {cat}
@@ -65,7 +65,7 @@ export default function Products() {
         <select
           value={sort}
           onChange={e => setSort(e.target.value)}
-          className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-xl text-sm text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
         >
           <option value="default">Sort by</option>
           <option value="price-low">Price: Low to High</option>
@@ -84,8 +84,8 @@ export default function Products() {
       ) : (
         <div className="text-center py-20">
           <p className="text-6xl mb-4">🔍</p>
-          <h3 className="text-xl font-semibold text-slate-700 mb-2">No products found</h3>
-          <p className="text-slate-500">Try adjusting your search or filter criteria</p>
+          <h3 className="text-xl font-semibold text-gray-300 mb-2">No products found</h3>
+          <p className="text-gray-500">Try adjusting your search or filter criteria</p>
         </div>
       )}
     </div>

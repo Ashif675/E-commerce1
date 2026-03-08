@@ -1,5 +1,4 @@
 // ─── Register Page ────────────────────────────────────────────────────
-// Signup form with name, email, password, and Google option.
 
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -22,117 +21,75 @@ export default function Register() {
     if (!name || !email || !password || !confirmPassword) return toast.error('Please fill all fields');
     if (password.length < 6) return toast.error('Password must be at least 6 characters');
     if (password !== confirmPassword) return toast.error('Passwords do not match');
-
     setLoading(true);
-    try {
-      await signup(email, password, name);
-      toast.success('Account created successfully!');
-      navigate('/');
-    } catch (err) {
-      const msg = err.code === 'auth/email-already-in-use'
-        ? 'An account with this email already exists'
-        : 'Signup failed. Please try again.';
-      toast.error(msg);
-    }
+    try { await signup(email, password, name); toast.success('Account created!'); navigate('/'); }
+    catch (err) { toast.error(err.code === 'auth/email-already-in-use' ? 'Email already in use' : 'Signup failed.'); }
     setLoading(false);
   }
 
   async function handleGoogleLogin() {
-    try {
-      await googleLogin();
-      toast.success('Welcome!');
-      navigate('/');
-    } catch {
-      toast.error('Google signup failed');
-    }
+    try { await googleLogin(); toast.success('Welcome!'); navigate('/'); } catch { toast.error('Google signup failed'); }
   }
+
+  const inputClass = "w-full pl-11 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500";
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 font-bold text-2xl mb-2">
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-3 py-1 rounded-lg text-sm">SHOP</span>
-            <span className="text-slate-800">Store</span>
+            <span className="bg-gradient-to-r from-emerald-500 to-green-400 text-gray-950 px-3 py-1 rounded-lg text-sm font-black">SHOP</span>
+            <span className="text-white">Store</span>
           </div>
-          <h1 className="text-2xl font-bold text-slate-800 mt-4">Create Account</h1>
-          <p className="text-slate-500 mt-1">Start shopping in seconds</p>
+          <h1 className="text-2xl font-bold text-white mt-4">Create Account</h1>
+          <p className="text-gray-500 mt-1">Start shopping in seconds</p>
         </div>
 
-        {/* Form Card */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-8">
-          <button
-            onClick={handleGoogleLogin}
-            className="w-full flex items-center justify-center gap-3 border border-slate-200 hover:border-slate-300 rounded-xl py-3 font-medium text-slate-700 hover:bg-slate-50 transition-all mb-6"
-          >
+        <div className="bg-gray-900 rounded-2xl border border-gray-800 p-8">
+          <button onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center gap-3 border border-gray-700 hover:border-gray-600 rounded-xl py-3 font-medium text-gray-300 hover:bg-gray-800 transition-all mb-6">
             <FcGoogle size={20} /> Continue with Google
           </button>
-
           <div className="flex items-center gap-4 mb-6">
-            <hr className="flex-1 border-slate-200" />
-            <span className="text-xs text-slate-400 font-medium">OR</span>
-            <hr className="flex-1 border-slate-200" />
+            <hr className="flex-1 border-gray-700" /><span className="text-xs text-gray-500 font-medium">OR</span><hr className="flex-1 border-gray-700" />
           </div>
-
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+              <label className="block text-sm font-medium text-gray-400 mb-1">Full Name</label>
               <div className="relative">
-                <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                <input type="text" value={name} onChange={e => setName(e.target.value)}
-                  placeholder="John Doe"
-                  className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  required />
+                <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+                <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="John Doe" required className={inputClass} />
               </div>
             </div>
-
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+              <label className="block text-sm font-medium text-gray-400 mb-1">Email</label>
               <div className="relative">
-                <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  required />
+                <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" required className={inputClass} />
               </div>
             </div>
-
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+              <label className="block text-sm font-medium text-gray-400 mb-1">Password</label>
               <div className="relative">
-                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)}
-                  placeholder="Min. 6 characters"
-                  className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  required />
+                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+                <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Min. 6 characters" required className={inputClass} />
               </div>
             </div>
-
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Confirm Password</label>
+              <label className="block text-sm font-medium text-gray-400 mb-1">Confirm Password</label>
               <div className="relative">
-                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
-                  placeholder="Re-enter password"
-                  className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  required />
+                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+                <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Re-enter password" required className={inputClass} />
               </div>
             </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-bold py-3 rounded-xl transition-colors"
-            >
+            <button type="submit" disabled={loading}
+              className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-800 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-emerald-600/20">
               {loading ? 'Creating account...' : <><FiUserPlus /> Create Account</>}
             </button>
           </form>
         </div>
-
-        <p className="text-center text-sm text-slate-500 mt-6">
-          Already have an account?{' '}
-          <Link to="/login" className="text-indigo-600 font-semibold hover:underline">Sign In</Link>
+        <p className="text-center text-sm text-gray-500 mt-6">
+          Already have an account? <Link to="/login" className="text-emerald-400 font-semibold hover:underline">Sign In</Link>
         </p>
       </div>
     </div>
