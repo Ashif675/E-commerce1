@@ -19,7 +19,7 @@ export default function Navbar() {
     try {
       await logout();
       toast.success('Logged out successfully');
-      navigate('/');
+      setTimeout(() => navigate('/'), 600);
     } catch {
       toast.error('Logout failed');
     }

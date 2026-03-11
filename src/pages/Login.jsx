@@ -20,8 +20,8 @@ export default function Login() {
     setLoading(true);
     try {
       await login(email, password);
-      toast.success('Welcome back!');
-      navigate('/');
+      toast.success('Login successful!');
+      setTimeout(() => navigate('/'), 600);
     } catch (err) {
       const msg = err.code === 'auth/invalid-credential' ? 'Invalid email or password'
         : err.code === 'auth/too-many-requests' ? 'Too many attempts. Try again later.' : 'Login failed.';
@@ -31,7 +31,14 @@ export default function Login() {
   }
 
   async function handleGoogleLogin() {
-    try { await googleLogin(); toast.success('Welcome!'); navigate('/'); } catch { toast.error('Google login failed'); }
+    try { 
+      await googleLogin(); 
+      toast.success('Login successful!'); 
+      setTimeout(() => navigate('/'), 600);
+    } catch (err) { 
+      console.error('Google Login Error:', err); 
+      toast.error('Google login failed: ' + err.message); 
+    }
   }
 
   return (

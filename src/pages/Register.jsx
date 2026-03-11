@@ -22,13 +22,24 @@ export default function Register() {
     if (password.length < 6) return toast.error('Password must be at least 6 characters');
     if (password !== confirmPassword) return toast.error('Passwords do not match');
     setLoading(true);
-    try { await signup(email, password, name); toast.success('Account created!'); navigate('/'); }
+    try { 
+      await signup(email, password, name); 
+      toast.success('Login successful!'); 
+      setTimeout(() => navigate('/'), 600);
+    }
     catch (err) { toast.error(err.code === 'auth/email-already-in-use' ? 'Email already in use' : 'Signup failed.'); }
     setLoading(false);
   }
 
   async function handleGoogleLogin() {
-    try { await googleLogin(); toast.success('Welcome!'); navigate('/'); } catch { toast.error('Google signup failed'); }
+    try { 
+      await googleLogin(); 
+      toast.success('Login successful!'); 
+      setTimeout(() => navigate('/'), 600);
+    } catch (err) { 
+      console.error('Google Signup Error:', err); 
+      toast.error('Google signup failed: ' + err.message); 
+    }
   }
 
   const inputClass = "w-full pl-11 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500";
