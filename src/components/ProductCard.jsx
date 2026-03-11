@@ -1,6 +1,4 @@
-// ─── Product Card Component ───────────────────────────────────────────
-// Displays a single product in a grid. Includes hover animation, rating stars,
-// add to cart, and wishlist toggle.
+// ─── Product Card (Amazon-style) ─────────────────────────────────────
 
 import { Link } from 'react-router-dom';
 import { FiShoppingCart, FiHeart, FiStar } from 'react-icons/fi';
@@ -11,7 +9,6 @@ import toast from 'react-hot-toast';
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isWishlisted } = useWishlist();
-
   const wishlisted = isWishlisted(product.id);
 
   function handleAddToCart(e) {
@@ -33,67 +30,54 @@ export default function ProductCard({ product }) {
     }
   }
 
-  // Render rating stars
   const stars = Array.from({ length: 5 }, (_, i) => (
-    <FiStar
-      key={i}
-      size={14}
-      className={i < Math.round(product.rating) ? 'fill-amber-400 text-amber-400' : 'text-gray-600'}
-    />
+    <FiStar key={i} size={12} className={i < Math.round(product.rating) ? 'fill-amber-400 text-amber-400' : 'text-gray-600'} />
   ));
 
   return (
     <Link to={`/products/${product.id}`} className="group">
-      <div className="product-card bg-gray-900 rounded-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-2 border border-gray-800 hover:border-emerald-500/30">
-
+      <div className="product-card bg-[#1a1a2e] rounded-lg overflow-hidden transition-all duration-300 transform hover:-translate-y-1 border border-[#232F3E] hover:border-[#FF9900]/30">
         {/* Image */}
-        <div className="relative overflow-hidden aspect-square bg-gray-800">
+        <div className="relative overflow-hidden aspect-square bg-[#232F3E]">
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
           />
-
-          {/* Stock Badge */}
           {product.stock < 10 && (
-            <span className="absolute top-3 left-3 bg-red-500/90 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-full">
+            <span className="absolute top-2 left-2 bg-[#CC0C39] text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded">
               Only {product.stock} left
             </span>
           )}
-
-          {/* Quick Actions Overlay */}
-          <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <button
-              onClick={handleToggleWishlist}
-              className={`p-2 rounded-full shadow-md backdrop-blur-sm transition-colors ${
-                wishlisted
-                  ? 'bg-red-500 text-white'
-                  : 'bg-gray-900/80 text-gray-300 hover:bg-red-500/90 hover:text-white'
-              }`}
-            >
-              <FiHeart size={16} className={wishlisted ? 'fill-current' : ''} />
+          <div className="absolute top-2 right-2 flex flex-col gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <button onClick={handleToggleWishlist}
+              className={`p-1.5 sm:p-2 rounded-full shadow-md backdrop-blur-sm transition-colors ${
+                wishlisted ? 'bg-red-500 text-white' : 'bg-black/60 text-gray-200 hover:bg-red-500/90 hover:text-white'
+              }`}>
+              <FiHeart size={14} className={wishlisted ? 'fill-current' : ''} />
             </button>
           </div>
-
-          {/* Bottom gradient overlay */}
-          <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-gray-900 to-transparent" />
         </div>
 
         {/* Info */}
-        <div className="p-4">
-          <p className="text-xs font-medium text-emerald-400 mb-1">{product.category}</p>
-          <h3 className="font-semibold text-gray-100 line-clamp-1 mb-1">{product.name}</h3>
-          <div className="flex items-center gap-1 mb-2">{stars}<span className="text-xs text-gray-500 ml-1">({product.rating})</span></div>
+        <div className="p-3 sm:p-4">
+          <h3 className="font-medium text-gray-100 line-clamp-2 text-xs sm:text-sm mb-1 leading-snug">{product.name}</h3>
+          <div className="flex items-center gap-0.5 mb-1.5">
+            {stars}
+            <span className="text-[10px] sm:text-xs text-gray-500 ml-1">({product.rating})</span>
+          </div>
           <div className="flex items-center justify-between">
-            <span className="text-lg font-bold text-white">₹{product.price.toLocaleString()}</span>
-            <button
-              onClick={handleAddToCart}
-              className="p-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl transition-colors shadow-lg shadow-emerald-600/20"
-            >
-              <FiShoppingCart size={16} />
+            <div>
+              <span className="text-base sm:text-lg font-bold text-white">₹{product.price.toLocaleString()}</span>
+              <span className="text-[10px] sm:text-xs text-gray-500 ml-1 line-through">₹{Math.round(product.price * 1.4).toLocaleString()}</span>
+            </div>
+            <button onClick={handleAddToCart}
+              className="p-1.5 sm:p-2 bg-[#FF9900] hover:bg-[#FFa726] text-[#0F1111] rounded-lg transition-colors">
+              <FiShoppingCart size={14} />
             </button>
           </div>
+          <p className="text-[10px] sm:text-xs text-[#FF9900] font-medium mt-1">Free delivery</p>
         </div>
       </div>
     </Link>

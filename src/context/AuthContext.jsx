@@ -53,7 +53,13 @@ export function AuthProvider({ children }) {
   // Google sign-in
   async function googleLogin() {
     const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
+    let result;
+    try {
+      result = await signInWithPopup(auth, provider);
+    } catch (error) {
+      // Re-throw with the Firebase error code preserved
+      throw error;
+    }
     // Create user doc if first Google sign-in
     const userDoc = await getDoc(doc(db, 'users', result.user.uid));
     if (!userDoc.exists()) {

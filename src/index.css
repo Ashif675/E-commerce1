@@ -3,55 +3,90 @@
 /* ── Google Fonts ── */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-/* ── Custom base styles ── */
+/* ── Custom base styles (Amazon-inspired) ── */
 @layer base {
   html {
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-gray-950 text-gray-100 antialiased;
+    @apply bg-[#0F1111] text-gray-100 antialiased;
     font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   }
   img {
     @apply select-none;
     -webkit-user-drag: none;
   }
-  /* Better focus rings */
   *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-emerald-400;
+    @apply outline-2 outline-offset-2 outline-[#FF9900];
   }
 }
 
-/* ── Custom utilities ── */
+/* ── Amazon-inspired utilities ── */
 @layer utilities {
+  .amz-nav {
+    background: #131921;
+    border-bottom: 1px solid rgba(255, 153, 0, 0.08);
+  }
+  .amz-nav-secondary {
+    background: #232F3E;
+  }
+  .amz-card {
+    background: #1a1a2e;
+    border: 1px solid #232F3E;
+    border-radius: 8px;
+  }
+  .amz-btn {
+    background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+    color: #111;
+    border: 1px solid #a88734;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .amz-btn:hover {
+    background: linear-gradient(to bottom, #f5d78e, #eeb933);
+  }
+  .amz-btn-orange {
+    background: linear-gradient(to bottom, #FFB347, #FF9900);
+    color: #111;
+    border: 1px solid #c77600;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .amz-btn-orange:hover {
+    background: linear-gradient(to bottom, #FFC266, #FFa726);
+  }
+  .text-amz {
+    color: #FF9900;
+  }
+  .bg-amz {
+    background-color: #FF9900;
+  }
   .glass {
     backdrop-filter: blur(20px) saturate(200%);
-    background: rgba(10, 20, 15, 0.82);
-    border-bottom: 1px solid rgba(52, 211, 153, 0.08);
-  }
-  .glass-card {
-    background: rgba(17, 24, 22, 0.85);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(52, 211, 153, 0.1);
+    background: rgba(19, 25, 33, 0.95);
   }
   .text-gradient {
-    background: linear-gradient(135deg, #34d399, #10b981, #059669);
+    background: linear-gradient(135deg, #FF9900, #FFB347, #FF6600);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .card-shadow {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.3);
   }
   .card-shadow-hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 20px 40px rgba(16, 185, 129, 0.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 20px 40px rgba(255,153,0,0.08);
   }
-  .glow-green {
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), 0 0 60px rgba(16, 185, 129, 0.06);
+  .glow-orange {
+    box-shadow: 0 0 20px rgba(255,153,0,0.15), 0 0 60px rgba(255,153,0,0.06);
   }
 }
 
-/* ── Skeleton loader animation ── */
+/* ── Skeleton loader ── */
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -72,7 +107,7 @@
   animation: fadeInUp 0.5s ease-out forwards;
 }
 
-/* ── Slide-in animation (for mobile menu) ── */
+/* ── Slide-down ── */
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-8px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -81,7 +116,7 @@
   animation: slideDown 0.25s ease-out forwards;
 }
 
-/* ── Pulse subtle (for badges) ── */
+/* ── Pulse subtle ── */
 @keyframes pulseSoft {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.1); }
@@ -90,10 +125,10 @@
   animation: pulseSoft 2s ease-in-out infinite;
 }
 
-/* ── Glow pulse for hero CTA ── */
+/* ── Glow pulse ── */
 @keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
-  50% { box-shadow: 0 0 35px rgba(16, 185, 129, 0.5), 0 0 60px rgba(16, 185, 129, 0.15); }
+  0%, 100% { box-shadow: 0 0 20px rgba(255,153,0,0.3); }
+  50% { box-shadow: 0 0 35px rgba(255,153,0,0.5), 0 0 60px rgba(255,153,0,0.15); }
 }
 .animate-glow {
   animation: glowPulse 3s ease-in-out infinite;
@@ -110,17 +145,17 @@
 
 /* ── Selection styling ── */
 ::selection {
-  background: #059669;
-  color: #ecfdf5;
+  background: #FF9900;
+  color: #0F1111;
 }
 
 /* ── Scrollbar styling ── */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: #0f172a; }
-::-webkit-scrollbar-thumb { background: #065f46; border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: #059669; }
+::-webkit-scrollbar-track { background: #0F1111; }
+::-webkit-scrollbar-thumb { background: #FF9900; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #FFB347; }
 
-/* ── Better transitions for interactive elements ── */
+/* ── Better transitions ── */
 a, button {
   transition-property: color, background-color, border-color, box-shadow, transform, opacity;
   transition-duration: 200ms;
@@ -137,12 +172,18 @@ img:not([src]) {
   min-height: 100px;
 }
 
-/* ── Toast notification polish ── */
+/* ── Toast notification ── */
 [data-sonner-toaster] {
   font-family: 'Inter', sans-serif !important;
 }
 
 /* ── Card hover glow effect ── */
 .product-card:hover {
-  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.12), 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px rgba(255, 153, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Amazon-style input focus ── */
+.amz-input:focus {
+  border-color: #FF9900;
+  box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.15);
 }

@@ -1,8 +1,8 @@
-// ─── Product Details Page ─────────────────────────────────────────────
+// ─── Product Details (Amazon-style) ──────────────────────────────────
 
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { FiShoppingCart, FiHeart, FiStar, FiChevronLeft, FiMinus, FiPlus, FiCheck } from 'react-icons/fi';
+import { FiShoppingCart, FiHeart, FiStar, FiChevronLeft, FiMinus, FiPlus, FiCheck, FiTruck } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import ReviewForm from '../components/ReviewForm';
@@ -20,9 +20,9 @@ export default function ProductDetails() {
 
   if (!product) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <h2 className="text-2xl font-bold text-white mb-4">Product Not Found</h2>
-        <Link to="/products" className="text-emerald-400 hover:underline">← Back to Products</Link>
+      <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+        <h2 className="text-xl font-bold text-white mb-3">Product Not Found</h2>
+        <Link to="/products" className="text-[#FF9900] hover:underline text-sm">← Back to Products</Link>
       </div>
     );
   }
@@ -37,52 +37,96 @@ export default function ProductDetails() {
 
   const avgRating = reviews.length > 0 ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1) : product.rating;
   const stars = Array.from({ length: 5 }, (_, i) => (
-    <FiStar key={i} size={18} className={i < Math.round(avgRating) ? 'fill-amber-400 text-amber-400' : 'text-gray-600'} />
+    <FiStar key={i} size={16} className={i < Math.round(avgRating) ? 'fill-amber-400 text-amber-400' : 'text-gray-600'} />
   ));
+  const mrp = Math.round(product.price * 1.4);
+  const discount = Math.round(((mrp - product.price) / mrp) * 100);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <Link to="/products" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-emerald-400 mb-6 transition-colors"><FiChevronLeft size={16} /> Back to Products</Link>
-      <div className="grid md:grid-cols-2 gap-10">
-        <div className="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800">
-          <img src={product.image} alt={product.name} className="w-full h-[400px] md:h-[500px] object-cover" />
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
+      <Link to="/products" className="inline-flex items-center gap-1 text-xs sm:text-sm text-gray-500 hover:text-[#FF9900] mb-4 transition-colors"><FiChevronLeft size={14} /> Back to Products</Link>
+      <div className="grid md:grid-cols-2 gap-6 sm:gap-10">
+        {/* Image */}
+        <div className="bg-[#1a1a2e] rounded-lg overflow-hidden border border-[#232F3E]">
+          <img src={product.image} alt={product.name} className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover" />
         </div>
+
+        {/* Info */}
         <div>
-          <span className="inline-block bg-emerald-500/15 text-emerald-400 text-xs font-semibold px-3 py-1 rounded-full border border-emerald-500/20 mb-3">{product.category}</span>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">{product.name}</h1>
-          <div className="flex items-center gap-2 mb-4"><div className="flex gap-0.5">{stars}</div><span className="text-sm text-gray-500">({avgRating}) · {reviews.length} reviews</span></div>
-          <p className="text-3xl font-bold text-emerald-400 mb-4">₹{product.price.toLocaleString()}</p>
-          <p className="text-gray-400 leading-relaxed mb-6">{product.description}</p>
-          <div className="flex items-center gap-2 mb-6">
-            {product.stock > 0 ? (<><FiCheck className="text-emerald-400" /><span className="text-sm font-medium text-emerald-400">In Stock ({product.stock} available)</span></>) : (<span className="text-sm font-medium text-red-400">Out of Stock</span>)}
+          <h1 className="text-lg sm:text-2xl font-bold text-white mb-2 leading-tight">{product.name}</h1>
+          <div className="flex items-center gap-2 mb-3">
+            <div className="flex gap-0.5">{stars}</div>
+            <span className="text-xs sm:text-sm text-[#FF9900]">{avgRating}</span>
+            <span className="text-xs text-gray-500">({reviews.length} reviews)</span>
           </div>
-          <div className="flex items-center gap-4 mb-6">
-            <span className="text-sm font-medium text-gray-400">Quantity:</span>
-            <div className="flex items-center border border-gray-700 rounded-xl overflow-hidden">
-              <button onClick={() => setQty(q => Math.max(1, q - 1))} className="px-3 py-2 hover:bg-gray-800 text-gray-400 transition-colors"><FiMinus size={16} /></button>
-              <span className="px-4 py-2 font-semibold text-white min-w-[40px] text-center">{qty}</span>
-              <button onClick={() => setQty(q => Math.min(product.stock, q + 1))} className="px-3 py-2 hover:bg-gray-800 text-gray-400 transition-colors"><FiPlus size={16} /></button>
+
+          <hr className="border-[#232F3E] mb-3" />
+
+          {/* Price */}
+          <div className="mb-3">
+            <div className="flex items-baseline gap-2">
+              <span className="text-[#CC0C39] text-sm font-medium">-{discount}%</span>
+              <span className="text-xl sm:text-2xl font-bold text-white">₹{product.price.toLocaleString()}</span>
+            </div>
+            <p className="text-xs sm:text-sm text-gray-500">M.R.P.: <span className="line-through">₹{mrp.toLocaleString()}</span></p>
+            <p className="text-xs text-gray-400 mt-1">Inclusive of all taxes</p>
+          </div>
+
+          <p className="text-gray-400 text-sm leading-relaxed mb-4">{product.description}</p>
+
+          {/* Stock */}
+          <div className="flex items-center gap-2 mb-4">
+            {product.stock > 0 ? (
+              <><FiCheck className="text-green-400" size={16} /><span className="text-sm font-medium text-green-400">In Stock</span></>
+            ) : (
+              <span className="text-sm font-medium text-red-400">Out of Stock</span>
+            )}
+          </div>
+
+          {/* Delivery info */}
+          <div className="flex items-center gap-2 mb-4 bg-[#1a1a2e] border border-[#232F3E] rounded-lg p-3">
+            <FiTruck className="text-[#FF9900]" size={16} />
+            <div>
+              <p className="text-xs sm:text-sm font-medium text-gray-200">FREE Delivery on orders above ₹999</p>
+              <p className="text-[10px] sm:text-xs text-gray-500">Usually delivered in 3-5 business days</p>
             </div>
           </div>
-          <div className="flex gap-3 mb-8">
+
+          {/* Quantity */}
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-sm font-medium text-gray-400">Qty:</span>
+            <div className="flex items-center border border-[#37475A] rounded-lg overflow-hidden">
+              <button onClick={() => setQty(q => Math.max(1, q - 1))} className="px-3 py-2 hover:bg-[#232F3E] text-gray-400"><FiMinus size={14} /></button>
+              <span className="px-4 py-2 font-semibold text-white bg-[#232F3E] min-w-[40px] text-center text-sm">{qty}</span>
+              <button onClick={() => setQty(q => Math.min(product.stock, q + 1))} className="px-3 py-2 hover:bg-[#232F3E] text-gray-400"><FiPlus size={14} /></button>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-4">
             <button onClick={handleAddToCart} disabled={product.stock === 0}
-              className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-gray-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors shadow-lg shadow-emerald-600/20">
-              <FiShoppingCart size={18} /> Add to Cart
+              className="flex-1 inline-flex items-center justify-center gap-2 amz-btn py-2.5 rounded-lg text-sm disabled:opacity-50">
+              <FiShoppingCart size={16} /> Add to Cart
             </button>
-            <button onClick={handleToggleWishlist}
-              className={`p-3 rounded-xl border-2 transition-all ${wishlisted ? 'border-red-500 bg-red-500/10 text-red-400' : 'border-gray-700 text-gray-500 hover:border-red-500/40 hover:text-red-400'}`}>
-              <FiHeart size={18} className={wishlisted ? 'fill-current' : ''} />
+            <button onClick={handleAddToCart} disabled={product.stock === 0}
+              className="flex-1 inline-flex items-center justify-center gap-2 amz-btn-orange py-2.5 rounded-lg text-sm disabled:opacity-50">
+              Buy Now
             </button>
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-gray-900 border border-gray-800 rounded-xl p-3 text-center"><p className="text-xs text-gray-500">Free Shipping</p><p className="text-sm font-semibold text-gray-300">Above ₹999</p></div>
-            <div className="bg-gray-900 border border-gray-800 rounded-xl p-3 text-center"><p className="text-xs text-gray-500">Easy Returns</p><p className="text-sm font-semibold text-gray-300">30 Days</p></div>
-          </div>
+          <button onClick={handleToggleWishlist}
+            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg border transition-all text-sm ${
+              wishlisted ? 'border-red-500 bg-red-500/10 text-red-400' : 'border-[#37475A] text-gray-500 hover:border-red-500/40 hover:text-red-400'
+            }`}>
+            <FiHeart size={16} className={wishlisted ? 'fill-current' : ''} />
+            {wishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
+          </button>
         </div>
       </div>
-      <div className="mt-16">
-        <h2 className="text-2xl font-bold text-white mb-6">Customer Reviews</h2>
-        <div className="grid md:grid-cols-2 gap-8"><ReviewForm onSubmit={handleReviewSubmit} /><ReviewList reviews={reviews} /></div>
+
+      {/* Reviews */}
+      <div className="mt-10 sm:mt-16">
+        <h2 className="text-lg sm:text-xl font-bold text-white mb-4">Customer Reviews</h2>
+        <div className="grid md:grid-cols-2 gap-6"><ReviewForm onSubmit={handleReviewSubmit} /><ReviewList reviews={reviews} /></div>
       </div>
     </div>
   );

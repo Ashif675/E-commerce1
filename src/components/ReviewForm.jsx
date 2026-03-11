@@ -1,4 +1,4 @@
-// ─── Review Form Component ────────────────────────────────────────────
+// ─── Review Form (Amazon-style) ──────────────────────────────────────
 
 import { useState } from 'react';
 import { FiStar, FiSend } from 'react-icons/fi';
@@ -21,20 +21,20 @@ export default function ReviewForm({ onSubmit }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-900 rounded-xl border border-gray-800 p-6">
-      <h4 className="font-semibold text-white mb-4">Write a Review</h4>
-      <div className="flex gap-1 mb-4">
+    <form onSubmit={handleSubmit} className="bg-[#1a1a2e] rounded-lg border border-[#232F3E] p-4 sm:p-5">
+      <h4 className="font-semibold text-white text-sm mb-3">Write a Review</h4>
+      <div className="flex gap-1 mb-3">
         {[1, 2, 3, 4, 5].map(star => (
           <button key={star} type="button" onClick={() => setRating(star)} onMouseEnter={() => setHover(star)} onMouseLeave={() => setHover(0)} className="transition-colors">
-            <FiStar size={24} className={star <= (hover || rating) ? 'fill-amber-400 text-amber-400' : 'text-gray-600'} />
+            <FiStar size={20} className={star <= (hover || rating) ? 'fill-amber-400 text-amber-400' : 'text-gray-600'} />
           </button>
         ))}
-        <span className="ml-2 text-sm text-gray-500">{rating > 0 && `${rating}/5`}</span>
+        <span className="ml-2 text-xs text-gray-500">{rating > 0 && `${rating}/5`}</span>
       </div>
-      <textarea value={comment} onChange={e => setComment(e.target.value)} placeholder="Share your experience with this product..."
-        rows={3} className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none mb-4" />
-      <button type="submit" className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-5 py-2.5 rounded-lg text-sm transition-colors shadow-lg shadow-emerald-600/20">
-        <FiSend size={14} /> Submit Review
+      <textarea value={comment} onChange={e => setComment(e.target.value)} placeholder="Share your experience..."
+        rows={3} className="w-full bg-[#232F3E] border border-[#37475A] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FF9900] resize-none mb-3" />
+      <button type="submit" className="inline-flex items-center gap-2 amz-btn-orange font-bold px-4 py-2 rounded-lg text-xs">
+        <FiSend size={12} /> Submit Review
       </button>
     </form>
   );

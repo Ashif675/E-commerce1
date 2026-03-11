@@ -1,81 +1,101 @@
-// ─── Hero Section Component ───────────────────────────────────────────
-// Full-width banner with gradient overlay, headline, and CTA buttons.
+// ─── Hero Section (Amazon-style) ─────────────────────────────────────
 
 import { Link } from 'react-router-dom';
-import { FiArrowRight, FiShoppingBag } from 'react-icons/fi';
+import { FiArrowRight, FiZap, FiTruck, FiShield, FiPercent } from 'react-icons/fi';
 
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-gray-950 via-emerald-950 to-gray-950 min-h-[85vh] flex items-center">
-      {/* Animated background shapes */}
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#232F3E] via-[#131921] to-[#0F1111]">
+      {/* Background pattern */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-3xl" />
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #10b981 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        <div className="absolute -top-20 -right-20 w-72 h-72 bg-[#FF9900]/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-[#FF9900]/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="text-white animate-fade-in-up">
-            <span className="inline-flex items-center gap-2 bg-emerald-500/15 border border-emerald-500/20 backdrop-blur-sm text-emerald-400 text-sm font-medium px-4 py-2 rounded-full mb-6">
-              <FiShoppingBag size={14} />
-              New Collection 2026
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
-              Discover Products That
-              <span className="block text-gradient">Define Your Style</span>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+        {/* Deal Banner */}
+        <div className="flex items-center justify-center gap-2 mb-6 sm:mb-8">
+          <span className="inline-flex items-center gap-1.5 bg-[#CC0C39] text-white text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full animate-pulse">
+            <FiZap size={14} />
+            Great Indian Sale — Up to 70% OFF
+          </span>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 items-center">
+          {/* Left content */}
+          <div className="text-white animate-fade-in-up text-center md:text-left">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-4">
+              Shop Everything
+              <span className="block text-gradient">You Love, For Less</span>
             </h1>
-            <p className="text-lg text-gray-400 mb-8 max-w-lg leading-relaxed">
-              Explore thousands of premium products at unbeatable prices. Free shipping on orders above ₹999.
+            <p className="text-base sm:text-lg text-gray-400 mb-6 max-w-md mx-auto md:mx-0 leading-relaxed">
+              Discover thousands of products at unbeatable prices. Free delivery on orders above ₹999.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 justify-center md:justify-start">
               <Link
                 to="/products"
-                className="inline-flex items-center gap-2 bg-emerald-500 text-gray-950 font-bold px-8 py-4 rounded-xl hover:bg-emerald-400 transition-all duration-300 shadow-lg shadow-emerald-500/25 animate-glow"
+                className="inline-flex items-center gap-2 amz-btn-orange px-6 sm:px-8 py-3 text-sm sm:text-base rounded-full animate-glow font-bold"
               >
                 Shop Now <FiArrowRight />
               </Link>
               <Link
-                to="/products"
-                className="inline-flex items-center gap-2 border-2 border-gray-700 text-gray-300 font-medium px-8 py-4 rounded-xl hover:bg-gray-800 hover:border-emerald-600/50 transition-all duration-300"
+                to="/products?category=Electronics"
+                className="inline-flex items-center gap-2 border border-gray-600 text-gray-200 font-medium px-6 sm:px-8 py-3 rounded-full hover:bg-white/5 hover:border-[#FF9900]/50 transition-all text-sm sm:text-base"
               >
-                View Categories
+                Today's Deals
               </Link>
             </div>
 
-            {/* Stats */}
-            <div className="flex gap-8 mt-10">
+            {/* Quick stats */}
+            <div className="flex gap-6 sm:gap-8 mt-8 justify-center md:justify-start">
               <div>
-                <p className="text-3xl font-bold text-emerald-400">10K+</p>
-                <p className="text-gray-500 text-sm">Products</p>
+                <p className="text-2xl sm:text-3xl font-bold text-[#FF9900]">10K+</p>
+                <p className="text-gray-500 text-xs sm:text-sm">Products</p>
               </div>
               <div>
-                <p className="text-3xl font-bold text-emerald-400">50K+</p>
-                <p className="text-gray-500 text-sm">Customers</p>
+                <p className="text-2xl sm:text-3xl font-bold text-[#FF9900]">50K+</p>
+                <p className="text-gray-500 text-xs sm:text-sm">Customers</p>
               </div>
               <div>
-                <p className="text-3xl font-bold text-emerald-400">4.8★</p>
-                <p className="text-gray-500 text-sm">Rating</p>
+                <p className="text-2xl sm:text-3xl font-bold text-[#FF9900]">4.8★</p>
+                <p className="text-gray-500 text-xs sm:text-sm">Rating</p>
               </div>
             </div>
           </div>
 
-          {/* Right side decorative card stack */}
-          <div className="hidden md:flex justify-center">
-            <div className="relative animate-float">
-              <div className="w-72 h-72 bg-emerald-500/5 backdrop-blur-sm rounded-3xl rotate-6 border border-emerald-500/10" />
-              <div className="absolute top-4 left-4 w-72 h-72 bg-emerald-500/8 backdrop-blur-sm rounded-3xl -rotate-3 border border-emerald-500/15" />
-              <div className="absolute top-8 left-8 w-72 h-72 bg-emerald-500/12 backdrop-blur-sm rounded-3xl rotate-1 border border-emerald-500/20 flex items-center justify-center glow-green">
-                <div className="text-center p-6">
-                  <p className="text-6xl mb-4">🛍️</p>
-                  <p className="text-white font-bold text-xl">Premium Quality</p>
-                  <p className="text-emerald-400/70 text-sm mt-2">Curated just for you</p>
-                </div>
-              </div>
-            </div>
+          {/* Right side - Deal cards */}
+          <div className="hidden md:grid grid-cols-2 gap-3">
+            {[
+              { emoji: '🎧', title: 'Electronics', discount: 'Up to 60% OFF', bg: 'from-blue-900/30 to-blue-950/50' },
+              { emoji: '👕', title: 'Fashion', discount: 'Min 40% OFF', bg: 'from-pink-900/30 to-pink-950/50' },
+              { emoji: '🏠', title: 'Home & Kitchen', discount: 'Starting ₹199', bg: 'from-green-900/30 to-green-950/50' },
+              { emoji: '📚', title: 'Books', discount: 'Flat 30% OFF', bg: 'from-amber-900/30 to-amber-950/50' },
+            ].map(card => (
+              <Link
+                key={card.title}
+                to={`/products?category=${card.title === 'Fashion' ? 'Clothing' : card.title === 'Home & Kitchen' ? 'Home' : card.title}`}
+                className={`bg-gradient-to-br ${card.bg} rounded-xl p-5 border border-white/5 hover:border-[#FF9900]/30 transition-all hover:-translate-y-1 group`}
+              >
+                <span className="text-3xl block mb-2">{card.emoji}</span>
+                <p className="font-bold text-white text-sm group-hover:text-[#FF9900] transition-colors">{card.title}</p>
+                <p className="text-xs text-[#FF9900] font-semibold mt-1">{card.discount}</p>
+              </Link>
+            ))}
           </div>
+        </div>
+
+        {/* Trust badges - mobile visible */}
+        <div className="grid grid-cols-3 gap-3 mt-8 md:mt-12">
+          {[
+            { icon: <FiTruck size={18} />, label: 'Free Delivery' },
+            { icon: <FiShield size={18} />, label: 'Secure Payment' },
+            { icon: <FiPercent size={18} />, label: 'Best Prices' },
+          ].map(badge => (
+            <div key={badge.label} className="flex items-center justify-center gap-2 bg-white/5 rounded-lg py-2.5 px-3 border border-white/5">
+              <span className="text-[#FF9900]">{badge.icon}</span>
+              <span className="text-xs sm:text-sm font-medium text-gray-300">{badge.label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
